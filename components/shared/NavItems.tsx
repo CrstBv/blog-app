@@ -19,7 +19,7 @@ const headerLinks = [
 ]
 
 
-const NavItems = () => {
+const AuthNavItems = () => {
     const pathname = usePathname();
 
   return (
@@ -43,4 +43,4 @@ const NavItems = () => {
   )
 }
 
-export default NavItems
+export default AuthNavItems
