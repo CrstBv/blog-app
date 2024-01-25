@@ -33,50 +33,51 @@ export async function getUserById(userId: string) {
 }
 
 type updateUserParams = {
-    firstName: string;
-    lastName: string;
-    username: string;
-    photo: string;
-  };
+  firstName: string;
+  lastName: string;
+  username: string;
+  photo: string;
+};
 
-export async function updateUser(clerkId:string, user: updateUserParams) {
-    try {
-        await connectToDatabase();
+export async function updateUser(clerkId: string, user: updateUserParams) {
+  try {
+    await connectToDatabase();
 
-        const updatedUser = await User.findOneAndUpdate({clerkId}, user, {new: true})
+    const updatedUser = await User.findOneAndUpdate({ clerkId }, user, {
+      new: true,
+    });
 
-        if(!updateUser)throw new Error('User update failed')
-        return JSON.parse(JSON.stringify(updatedUser))
-    } catch (error) {
-        console.error(error)
-        throw new Error(typeof error === 'string' ? error : JSON.stringify(error));
-    }
+    if (!updateUser) throw new Error("User update failed");
+    return JSON.parse(JSON.stringify(updatedUser));
+  } catch (error) {
+    console.error(error);
+    throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+  }
 }
 
 export async function deleteUser(clerkId: string) {
-    try {
-      await connectToDatabase()
-  
-      const userToDelete = await User.findOne({ clerkId })
-  
-      if (!userToDelete) {
-        throw new Error('User not found')
-      }
-  
-      await Promise.all([
-        Post.updateMany(
-          { _id: { $in: userToDelete.posts } },
-          { $pull: { author: userToDelete._id } }
-        ),
-  
-      ])
-  
-      const deletedUser = await User.findByIdAndDelete(userToDelete._id)
-      revalidatePath('/')
-  
-      return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null
-    } catch (error) {
-        console.error(error)
-        throw new Error(typeof error === 'string' ? error : JSON.stringify(error));
+  try {
+    await connectToDatabase();
+
+    const userToDelete = await User.findOne({ clerkId });
+
+    if (!userToDelete) {
+      throw new Error("User not found");
     }
+
+    await Promise.all([
+      Post.updateMany(
+        { _id: { $in: userToDelete.posts } },
+        { $pull: { author: userToDelete._id } }
+      ),
+    ]);
+
+    const deletedUser = await User.findByIdAndDelete(userToDelete._id);
+    revalidatePath("/");
+
+    return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
+  } catch (error) {
+    console.error(error);
+    throw new Error(typeof error === "string" ? error : JSON.stringify(error));
   }
+}
