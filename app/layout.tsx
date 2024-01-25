@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter as Lora } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import { ClerkProvider } from "@clerk/nextjs";
 
 const lora = Lora({
   subsets: ["latin"],
