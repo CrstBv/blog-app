@@ -6,8 +6,7 @@ export interface IPost extends Document {
   title: string;
   description: string;
   imageUrl?: string;
-  url?: string;
-  private: boolean;
+  private: Boolean;
   category?: { _id: string; name: string };
 }
 
@@ -18,7 +17,6 @@ const PostSchema = new Schema(
     description: { type: String, required: true },
     imageUrl: { type: String },
     private: { type: Boolean, default: false },
-    url: { type: String },
     category: { type: Schema.Types.ObjectId, ref: "Category" },
   },
   { timestamps: true }
