@@ -5,7 +5,16 @@ import { connectToDatabase } from "../database";
 import User from "../database/models/user.model";
 import Post from "../database/models/post.model";
 
-export async function createUser(user: User) {
+type createUserParams = {
+    clerkId: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    photo: string;
+}
+
+export async function createUser(user: createUserParams) {
   try {
     await connectToDatabase();
 
