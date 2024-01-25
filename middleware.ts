@@ -4,7 +4,7 @@ export default authMiddleware({
     publicRoutes: [
         '/',
         '/blog:id',
-        '/api/webhooks/clerk',
+        '/api/webhooks/clerk(.*)',
         '/api/uploadthing',
 
     ],

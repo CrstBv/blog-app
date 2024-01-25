@@ -74,3 +74,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.inputField {
+  @apply h-[54px] focus-visible:ring-offset-0 text-[16px] font-normal leading-[24px] px-4 py-3 focus-visible:ring-transparent !important
+}
