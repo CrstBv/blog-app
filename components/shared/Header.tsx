@@ -1,9 +1,9 @@
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import AuthNavItems from "./NavItems";
 import { Button } from "../ui/button";
 import { ModeToggle } from "../ui/mode-toggle";
 import { SheetSide } from "./MobileNav";
+import AuthNavItems from "./NavItems";
 
 const Header = () => {
   return (
@@ -11,24 +11,24 @@ const Header = () => {
       <div className="container max-w-7xl h-16 flex items-center">
         <div className="mr-4 hidden md:flex">
           <Button variant="link">
-          <Link href={"/"}>Header</Link>
-        </Button>
-        <SignedIn>
-          <nav className="flex items-center gap-6 text-sm">
-          <AuthNavItems />
-        </nav>
-        </SignedIn>
+            <Link href={"/"}>Header</Link>
+          </Button>
+          <SignedIn>
+            <nav className="flex items-center gap-6 text-sm">
+              <AuthNavItems />
+            </nav>
+          </SignedIn>
         </div>
 
         <SheetSide />
-        
+
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <SignedIn>
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
           <SignedOut>
-            <Button asChild variant="ghost" className="rounded-lg">
-              <Link href={"/sign-in"}>LogIn</Link>
+            <Button asChild variant="ghost" className="rounded-lg" size="lg">
+              <Link href="/sign-in">LogIn</Link>
             </Button>
           </SignedOut>
           <ModeToggle />
