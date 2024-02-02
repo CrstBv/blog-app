@@ -6,7 +6,7 @@ export interface IPost extends Document {
   title: string;
   description: string;
   imageUrl?: string;
-  private: Boolean;
+  private: boolean;
   category?: { _id: string; name: string };
 }
 
@@ -21,8 +21,6 @@ const PostSchema = new Schema(
   },
   { timestamps: true }
 );
-
-type Post = InferSchemaType<typeof PostSchema>;
 
 const Post = models.Post || model("Post", PostSchema);
 

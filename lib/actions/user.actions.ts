@@ -5,7 +5,7 @@ import { connectToDatabase } from "../database";
 import User from "../database/models/user.model";
 import Post from "../database/models/post.model";
 
-type createUserParams = {
+type CreateUserParams = {
     clerkId: string;
     firstName: string;
     lastName: string;
@@ -14,7 +14,7 @@ type createUserParams = {
     photo: string;
 }
 
-export async function createUser(user: createUserParams) {
+export async function createUser(user: CreateUserParams) {
   try {
     await connectToDatabase();
 
@@ -41,14 +41,14 @@ export async function getUserById(userId: string) {
   }
 }
 
-type updateUserParams = {
+type UpdateUserParams = {
   firstName: string;
   lastName: string;
   username: string;
   photo: string;
 };
 
-export async function updateUser(clerkId: string, user: updateUserParams) {
+export async function updateUser(clerkId: string, user: UpdateUserParams) {
   try {
     await connectToDatabase();
 
