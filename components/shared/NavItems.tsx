@@ -32,7 +32,7 @@ const AuthNavItems = () => {
                 <li
                 key={link.route}
                 className={`${
-                    isActive && "text-cyan-400"
+                    isActive && "text-cyan-300"
                   } flex-center p-medium-16 whitespace-nowrap`}
                 >
                     <Link href={link.route}>{link.label}</Link>
