@@ -16,6 +16,7 @@ const PostDetails = async ({
   params: { id },
   searchParams,
 }: searchParamProps) => {
+  const page = Number(searchParams?.page) || 1;
   const post = await getPostById(id);
   const relatedPost = await getRelatedPostsByCategory({
     categoryId: post.category._id,
@@ -30,13 +31,13 @@ const PostDetails = async ({
   return (
     <div className="container relative">
       <section className="flex w-full justify-center pt-8 max-w-7xl ">
-        <div className="grid" >
+        <div className="grid max-w-2xl" >
           <Image
             src={post.imageUrl}
             alt="hero image"
             width={1000}
             height={1000}
-            className="w-full h-fit object-cover object-center"
+            className="w-full h-fit max-h-[575px] object-cover object-center"
             priority
           />
 
@@ -67,7 +68,7 @@ const PostDetails = async ({
               </div>
             </div>
             <div>
-              <div className="text-xl">
+              <div className="text-xl text-justify">
                 <p>{post.description}</p>
               </div>
             </div>
@@ -93,7 +94,7 @@ const PostDetails = async ({
           emptyStateSubtext="Come back later"
           collectionTye="All_Posts"
           limit={9}
-          page={1}
+          page={page}
           totalPages={relatedPost.totalPages}
         />
       </section>

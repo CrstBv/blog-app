@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 
+
 const Profile = async () => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;

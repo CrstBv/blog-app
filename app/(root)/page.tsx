@@ -57,7 +57,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           emptyStateSubtext="Come back later"
           collectionTye="All_Posts"
           limit={9}
-          page={1}
+          page={page}
           totalPages={publicPost.totalPages}
         />
       </section>
