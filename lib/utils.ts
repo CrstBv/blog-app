@@ -52,8 +52,17 @@ export function removeKeysFromQuery({
   );
 }
 
-
 export type SearchParamsProps = {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString("es-Mx", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
 }

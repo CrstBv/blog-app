@@ -6,10 +6,9 @@ import DeleteConfirmation from "./DeleteConfirmation";
 
 type CardProps = {
   post: IPost;
-  isPrivatePost: boolean;
 };
 
-const Card = ({ post, isPrivatePost }: CardProps) => {
+const Card = ({ post }: CardProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   const isAuthor = userId === post.author._id.toString();
@@ -24,7 +23,6 @@ const Card = ({ post, isPrivatePost }: CardProps) => {
         style={{ backgroundImage: `url(${post.imageUrl})` }}
         className="flex justify-center flex-grow bg-slate-500 bg-cover bg-center"
       />
-      {/* is event creator ... */}
 
       {isAuthor && (
         <div>

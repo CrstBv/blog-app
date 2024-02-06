@@ -3,6 +3,8 @@ import {
   getPostById,
   getRelatedPostsByCategory,
 } from "@/lib/actions/post.actions";
+import { formatDate } from "@/lib/utils";
+import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 
 type searchParamProps = {
@@ -20,50 +22,64 @@ const PostDetails = async ({
     postId: post._id,
     page: searchParams.page as string,
   });
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
+  const isAuthor = userId === post.author._id.toString();
+
+
   return (
-    <div className="container relative ">
-      <section className="flex justify-center pt-8 max-w-7xl">
-        <div className="grid grid-rows-1 md:grid-rows-2">
+    <div className="container relative">
+      <section className="flex w-full justify-center pt-8 max-w-7xl ">
+        <div className="grid" >
           <Image
             src={post.imageUrl}
             alt="hero image"
             width={1000}
             height={1000}
-            className="h-full w-fit min-h-[32px] max-h-[55vh] object-cover object-center"
+            className="w-full h-fit object-cover object-center"
             priority
           />
 
           <div className="flex w-full flex-col gap-8 p-5 md:p-10">
             <div className="flex flex-col gap-6">
-              <h2>{post.title}</h2>
+              <h2 className="text-2xl">{post.title}</h2>
               <div className="gap-3">
-                <p className="">
+                <p className="py-2">
                   by{" "}
-                  <span>
+                  <span className="text-lg">
                     {post.author.firstName} {post.author.lastName}
                   </span>
                 </p>
-                <div className="">
-                  <span>Published</span>
-                  <span className="pl-1">
-                    {post.createdAt} {/*Add a date format */}
-                  </span>
+                <div className="text-[12px]">
+                    {post.createdAt > post.updatedAt ? 
+                    <div>
+                      <span>Published</span>
+                    <span className="pl-2">
+                    {formatDate(post.createdAt)} </span>
+                    </div>
+                     : <div>
+                     <span>Udated</span>
+                   <span className="pl-2" >
+                    {formatDate(post.updatedAt)}
+                    </span>
+                   </div> }
                 </div>
               </div>
             </div>
             <div>
-              <div>
+              <div className="text-xl">
                 <p>{post.description}</p>
               </div>
             </div>
-            <div>
+            <div className="py-3">
               <div>
                 <p>Category: {post.category.name}</p>
               </div>
-              <p>
-                {post.private
-                  ? "Only you can see this post"
-                  : "Everyone can see this post"}
+              <p className="flex pt-2 text-teal-300 items-center">
+                {isAuthor ? post.private
+                  ? "!Only you can see this post"
+                  : "!Everyone can see this post"
+                : ''}
               </p>
             </div>
           </div>
@@ -81,7 +97,7 @@ const PostDetails = async ({
           totalPages={relatedPost.totalPages}
         />
       </section>
-    </div>
+      </div>
   );
 };
 
