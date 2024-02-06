@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
             <h1 className="font-bold text-[40px] leading-[48px] lg:text-[48px] lg:leading-[60px]  xl:text-[58px] xl:leading-[74px]">
               Cosmic Horizons Blog
             </h1>
-            <p className="p-regular-20 md:p-regular-24">
+            <p className="text-[20px] md:text-[24x]">
               Embark on a modest blog app inviting you to casually explore posts
               about the deep universe. From distant galaxies to enigmatic cosmic
               phenomena, these posts offer a glimpse into the profound mysteries
@@ -35,7 +35,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
               surrounds us.
             </p>
           </div>
-          {/*Add here the card for the post we can use the nasa API */}
           <Image
             src="/assets/images/home.png"
             alt="home"
@@ -52,7 +51,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           <Search />
           <CategoryFilter />
         </div>
-
         <Collection
           data={publicPost?.data}
           emptyTitle="No post found"
