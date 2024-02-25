@@ -11,7 +11,7 @@ import AuthNavItems from "./NavItems";
 
 export function SheetSide() {
   return (
-    <div className="grid grid-cols-2 gap-2 md:hidden">
+    <div className="grid grid-cols-2 gap-2">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline">CBlog</Button>

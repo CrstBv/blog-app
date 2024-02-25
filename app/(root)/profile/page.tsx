@@ -1,13 +1,15 @@
 import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
 import { getPostByUser } from "@/lib/actions/post.actions";
+import { SearchParamsProps } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 
 
-const Profile = async () => {
+const Profile = async ({searchParams}: SearchParamsProps) => {
   const { sessionClaims } = auth();
+  const page = Number(searchParams?.page) || 1;
   const userId = sessionClaims?.userId as string;
   const userPost = await getPostByUser({ userId, page: 1 });
 
@@ -31,7 +33,7 @@ const Profile = async () => {
           emptyStateSubtext="Create some now"
           collectionTye="My_Posts"
           limit={9}
-          page={1}
+          page={page}
           totalPages={userPost.totalPages}
         />
         </div>

@@ -30,20 +30,21 @@ const PostDetails = async ({
 
   return (
     <div className="container relative">
-      <section className="flex w-full justify-center pt-8 max-w-7xl ">
-        <div className="grid max-w-2xl" >
-          <Image
+      <section className="max-w-7xl pt-8">
+        <div className="grid">
+          <div className="flex justify-center w-full pb-5">
+            <Image
             src={post.imageUrl}
             alt="hero image"
             width={1000}
             height={1000}
-            className="w-full h-fit max-h-[575px] object-cover object-center"
+            className="max-w-[550px] w-full h-fit max-h-[525px] object-cover object-center"
             priority
           />
-
+          </div>
           <div className="flex w-full flex-col gap-8 p-5 md:p-10">
             <div className="flex flex-col gap-6">
-              <h2 className="text-2xl">{post.title}</h2>
+              <h2 className="text-4xl">{post.title}</h2>
               <div className="gap-3">
                 <p className="py-2">
                   by{" "}
@@ -68,7 +69,7 @@ const PostDetails = async ({
               </div>
             </div>
             <div>
-              <div className="text-xl text-justify">
+              <div className="px-2 text-xl text-justify">
                 <p>{post.description}</p>
               </div>
             </div>

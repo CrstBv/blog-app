@@ -14,18 +14,18 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     query: searchText,
     category,
     page,
-    limit: 6,
+    limit: 12,
   });
 
   return (
     <div className="container relative">
-      <section className="items-center py-4 md:py-6 md:pb-5 xl:py-10 xl:pb-8">
+      <section className="items-center py-3 md:py-4 md:pb-4 xl:py-6 xl:pb-6">
         <div className="max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full grid grid-cols-1 gap-7 md:grid-cols-2 2xl:gap-3">
           <div className="flex flex-col justify-center gap-8">
             <h1 className="font-bold text-[40px] leading-[48px] lg:text-[48px] lg:leading-[60px]  xl:text-[58px] xl:leading-[74px]">
               Cosmic Horizons Blog
             </h1>
-            <p className="text-[20px] md:text-[24x]">
+            <p className="text-[18px] md:text-[21x]">
               Embark on a modest blog app inviting you to casually explore posts
               about the deep universe. From distant galaxies to enigmatic cosmic
               phenomena, these posts offer a glimpse into the profound mysteries
@@ -40,7 +40,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
             alt="home"
             width={1000}
             height={1000}
-            className="max-h-[48vh] object-contain  object-center 2xl:max-h-[44vh]"
+            className="max-h-[44vh] object-contain  object-center 2xl:max-h-[40vh]"
             priority={true}
           />
         </div>

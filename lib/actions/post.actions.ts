@@ -78,7 +78,7 @@ type GetAllPostParams = {
 
 export async function getAllPublicPost({
   query,
-  limit = 6,
+  limit,
   page,
   category,
 }: GetAllPostParams) {
@@ -127,8 +127,8 @@ type GetUserPostParams ={
 
 export async function getPostByUser({
   userId,
-  limit = 6,
-   page,
+  limit = 9,
+  page,
 }: GetUserPostParams) {
   try {
     await connectToDatabase();
@@ -225,8 +225,8 @@ type GetRelatedPostsByCategoryParams ={
 export async function getRelatedPostsByCategory({
   categoryId,
   postId,
-  limit = 3,
-  page = 1,
+  limit = 9,
+  page,
 }: GetRelatedPostsByCategoryParams) {
   try {
     await connectToDatabase()

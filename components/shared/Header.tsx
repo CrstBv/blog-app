@@ -15,16 +15,26 @@ const Header = () => {
               <AuthNavItems />
             </nav>
           </SignedIn>
+          <SignedOut>
+            <Link href="/" className="pl-9 hover:text-cyan-300">Home</Link>
+          </SignedOut>
         </div>
 
-        <SheetSide />
+        <div className="md:hidden">
+          <SignedIn>
+            <SheetSide />
+          </SignedIn>
+          <SignedOut>
+            <Link href="/" className="px-8 hover:text-cyan-300">Home</Link>
+          </SignedOut>
+        </div>
 
         <div className="flex flex-1 items-center justify-end space-x-2 md:justify-end">
           <SignedIn>
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
           <SignedOut>
-            <Button asChild variant="ghost" className="rounded-lg" size="lg">
+            <Button asChild variant="ghost" className="rounded-lg" size="sm">
               <Link href="/sign-in">LogIn</Link>
             </Button>
           </SignedOut>
