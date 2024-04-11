@@ -193,7 +193,7 @@ export async function updatePost({userId, post, path}: UpdatePostParams) {
 
     const postToUpdate = await Post.findById(post._id)
     if(!postToUpdate){
-      throw new Error('Event not found')
+      throw new Error('Post not found')
     }
 
     if(postToUpdate.author.toHexString() !== userId){
@@ -235,15 +235,15 @@ export async function getRelatedPostsByCategory({
     const privacyCondition = { private: false }
     const conditions = { $and: [{ category: categoryId }, { _id: { $ne: postId } }, privacyCondition] }
 
-    const eventsQuery = Post.find(conditions)
+    const PostsQuery = Post.find(conditions)
       .sort({ createdAt: 'desc' })
       .skip(skipAmount)
       .limit(limit)
 
-    const events = await populatePost(eventsQuery)
-    const eventsCount = await Post.countDocuments(conditions)
+    const posts = await populatePost(PostsQuery)
+    const PostsCount = await Post.countDocuments(conditions)
 
-    return { data: JSON.parse(JSON.stringify(events)), totalPages: Math.ceil(eventsCount / limit) }
+    return { data: JSON.parse(JSON.stringify(posts)), totalPages: Math.ceil(PostsCount / limit) }
   } catch (error) {
     console.error
     throw new Error(typeof error === 'string' ? error : JSON.stringify(error))
