@@ -11,11 +11,10 @@ const Profile = async ({searchParams}: SearchParamsProps) => {
   const { sessionClaims } = auth();
   const page = Number(searchParams?.page) || 1;
   const userId = sessionClaims?.userId as string;
-  const userPost = await getPostByUser({ userId, page: 1 });
+  const userPost = await getPostByUser({ userId, page });
 
   return (
     <div className="container max-w-7xl">
-      {/*My events */}
       <div className="flex items-center py-3 md:py-5">
         <div className="flex items-center gap-6 mr-4">
           <h2 className="text-[34px] leading-10">My Posts</h2>
