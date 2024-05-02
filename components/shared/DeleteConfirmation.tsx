@@ -14,6 +14,7 @@ import {
 import { usePathname } from 'next/navigation'
 import { deletePost } from '@/lib/actions/post.actions'
 import { useTransition } from 'react'
+import { TrashIcon } from '@radix-ui/react-icons'
 
 const DeleteConfirmation = ({postId}: {postId: string}) => {
     const pathname = usePathname()
@@ -21,7 +22,8 @@ const DeleteConfirmation = ({postId}: {postId: string}) => {
 
   return (
     <AlertDialog>
-        <AlertDialogTrigger className='rounded-b-lg bg-red-400'>
+        <AlertDialogTrigger className='text-red-400 flex gap-1 items-center'>
+        <TrashIcon className="w-5 h-4"/>
             Delete
         </AlertDialogTrigger>
         <AlertDialogContent className='bg-inherit'>

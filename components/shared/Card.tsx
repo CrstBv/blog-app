@@ -1,8 +1,17 @@
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { IPost } from "@/lib/database/models/post.model";
 import { auth } from "@clerk/nextjs";
+import { DropdownMenuIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import DeleteConfirmation from "./DeleteConfirmation";
+
 
 type CardProps = {
   post: IPost;
@@ -26,12 +35,21 @@ const Card = ({ post }: CardProps) => {
 
       {isAuthor && (
         <div>
-          <div className="absolute right-1 top-1 flex flex-col rounded-xl bg-slate-600 shadow-sm transition-all">
-            <Button asChild variant="ghost">
-              <Link href={`post/${post._id}/update`}>Edit</Link>
-            </Button>
-
-            <DeleteConfirmation postId={post._id} />
+          <div className="absolute right-2 top-2 rounded-sm bg-transparent shadow-inner transition-all">
+          <DropdownMenu>
+            <DropdownMenuTrigger><DropdownMenuIcon className="w-7 h-7" /></DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem className="flex gap-1 items-center cursor-pointer">
+                <Button asChild variant='ghost' className="flex gap-1 items-center h-7">
+                  <Link href={`/post/${post._id}/update`}><Pencil1Icon className="w-4 h-4"/>Edit</Link>
+                </Button>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="flex gap-1 items-center justify-center cursor-pointer">
+                <DeleteConfirmation postId={post._id} />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>            
           </div>
         </div>
       )}
