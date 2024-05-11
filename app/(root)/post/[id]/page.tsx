@@ -1,4 +1,5 @@
 import Collection from "@/components/shared/Collection";
+import { CommentForm } from "@/components/shared/CommentForm";
 import {
   getPostById,
   getRelatedPostsByCategory,
@@ -86,6 +87,9 @@ const PostDetails = async ({
             </div>
           </div>
         </div>
+      </section>
+      <section>
+        <CommentForm />
       </section>
       <section className="my-8 flex flex-col ga-8 md:gap-12">
         <h2>Related Post</h2>
