@@ -9,11 +9,11 @@ type CreateCommentParams = {
     userId: string
     comment: {
         message: string
-        postId: string
     }
+    postId: string
 }
 
-export async function createComentary({userId, comment}: CreateCommentParams) {
+export async function createComentary({userId, comment, postId}: CreateCommentParams) {
     try {
         await connectToDatabase()
 
@@ -25,7 +25,7 @@ export async function createComentary({userId, comment}: CreateCommentParams) {
 
         const newComment = await Comment.create({
             ...comment,
-            postId: comment.postId,
+            post: postId,
             author: userId
         })
 
@@ -38,7 +38,7 @@ export async function createComentary({userId, comment}: CreateCommentParams) {
 
 export async function populateComment(query: any) {
     return query
-      .populate({ path: "author", model: User, select: "_id firstName lastName" })
+      .populate({ path: "author", model: User, select: "_id firstName lastName photo" })
       .populate({ path: "category", model: Post, select: "_id title" });
 }
 
@@ -59,15 +59,22 @@ export async function getCommentById({commentId}: {commentId: string}) {
     }
 }
 
-export async function getAllPostComments() {
+
+export async function getAllPostComments({postId}: {postId: string}) {
     try {
         await connectToDatabase()
 
-        const commentsQuery = await Comment.find()
+        const conditions = {post: postId}
 
-        const comments = await populateComment(commentsQuery)
+        const commentsQuery = await Comment.find(conditions)
 
-        return JSON.parse(JSON.stringify(comments))
+        //const comments = await populateComment(commentsQuery)
+
+        if(!commentsQuery){
+            return []
+        }
+
+        return JSON.parse(JSON.stringify(commentsQuery))
     } catch (error) {
         console.error(error)
         throw new Error(typeof error === "string" ? error : JSON.stringify(error))

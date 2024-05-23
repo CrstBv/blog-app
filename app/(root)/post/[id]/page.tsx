@@ -1,5 +1,7 @@
 import Collection from "@/components/shared/Collection";
-import { CommentForm } from "@/components/shared/CommentForm";
+import { CreateCommentForm } from "@/components/shared/CommentForm";
+import { CommentsSection } from "@/components/shared/CommentsSection";
+import { getAllPostComments } from "@/lib/actions/comment.action";
 import {
   getPostById,
   getRelatedPostsByCategory,
@@ -27,6 +29,7 @@ const PostDetails = async ({
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   const isAuthor = userId === post.author._id.toString();
+  const comments = await getAllPostComments({postId: post._id})
 
 
   return (
@@ -89,7 +92,12 @@ const PostDetails = async ({
         </div>
       </section>
       <section>
-        <CommentForm />
+          <div>
+            <CreateCommentForm userId={userId} postId={post._id} />
+            </div>
+            <div>
+              <CommentsSection data={comments} />
+            </div>
       </section>
       <section className="my-8 flex flex-col ga-8 md:gap-12">
         <h2>Related Post</h2>

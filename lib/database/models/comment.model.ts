@@ -2,7 +2,7 @@ import { Schema, model, models } from "mongoose";
 
 export interface IComment extends Document {
     _id: string;
-    author: {_id: string, firstName: string, lastName: string};
+    author: {_id: string, firstName: string, lastName: string, photo: string };
     message: string;
     post: {_id: string, title: string}
 }
