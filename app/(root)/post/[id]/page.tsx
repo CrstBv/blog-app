@@ -1,5 +1,5 @@
 import Collection from "@/components/shared/Collection";
-import { CreateCommentForm } from "@/components/shared/CommentForm";
+import { CommentForm } from "@/components/shared/CommentForm";
 import { CommentsSection } from "@/components/shared/CommentsSection";
 import { getAllPostComments } from "@/lib/actions/comment.action";
 import {
@@ -91,15 +91,15 @@ const PostDetails = async ({
           </div>
         </div>
       </section>
-      <section>
+      <section className="mx-12 flex items-center">
           <div>
-            <CreateCommentForm userId={userId} postId={post._id} />
+            <CommentForm userId={userId} postId={post._id} type="Create" />
             </div>
             <div>
               <CommentsSection data={comments} />
             </div>
       </section>
-      <section className="my-8 flex flex-col ga-8 md:gap-12">
+      <section className="my-8 flex flex-col gap-8 md:gap-12">
         <h2>Related Post</h2>
         <Collection
           data={relatedPost?.data}

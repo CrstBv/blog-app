@@ -80,3 +80,48 @@ export async function getAllPostComments({postId}: {postId: string}) {
         throw new Error(typeof error === "string" ? error : JSON.stringify(error))
     }
 }
+
+
+export async function deleteComment({commentId}: {commentId: string}) {
+    try {
+        await connectToDatabase()
+
+        const comment = await Comment.findByIdAndDelete({commentId})
+
+        if(!comment){
+            throw new Error("Comment not found")
+        }
+
+        console.log("comment deleted successfully")
+    } catch (error) {
+        console.error(error)
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    }
+}
+
+export async function updateComment({comment, userId}: {comment: {_id: string, message: string}, userId: string, }) {
+    try {
+        await connectToDatabase()
+
+        const commentToUpdate = await Comment.findById(comment._id)
+
+        if(!commentToUpdate){
+            throw new Error("Comment not found")
+        }
+
+        if(commentToUpdate.author.toHexString() !== userId){
+            throw new Error('Unauthorized')
+          }
+
+          const updatedComment= await Comment.findByIdAndUpdate(
+            comment._id,
+            {...comment}
+        )
+
+
+    return JSON.parse(JSON.stringify(updatedComment))
+    } catch (error) {
+        console.error(error)
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    }
+}

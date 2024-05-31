@@ -1,12 +1,17 @@
 import { IComment } from "@/lib/database/models/comment.model"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { CommentCardActions } from "./CommentCardActions"
+import { CommentCardActions, CommentCardAuthorActions } from "./CommentCardActions"
+import { auth } from "@clerk/nextjs";
 
 type CommentProps = {
     comment: IComment
 }
 
 export function CommentCard({comment}: CommentProps) {
+    const { sessionClaims } = auth();
+    const userId = sessionClaims?.userId as string;
+    const isAuthor = userId === comment.author._id.toString();
+
     return (
         <div>
             <div>
@@ -22,11 +27,14 @@ export function CommentCard({comment}: CommentProps) {
                     </div>
                 </div>
             </div>
-            <p>
+            {isAuthor && (
+                <CommentCardAuthorActions commentId={comment._id} userId={userId}/>
+            )}
+            <p className="w-full text-sm">
             {comment.message}
             </p>
             </div>
-            <div>
+            <div className="flex justify-end mr-16">
                 <CommentCardActions />
             </div>
         </div>

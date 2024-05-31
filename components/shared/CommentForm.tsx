@@ -14,7 +14,7 @@ import {
   FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { createComentary } from "@/lib/actions/comment.action"
+import { createComentary, updateComment } from "@/lib/actions/comment.action"
 import { PaperPlaneIcon } from "@radix-ui/react-icons"
  
 const formSchema = z.object({
@@ -23,7 +23,7 @@ const formSchema = z.object({
   }),
 })
 
-export function CreateCommentForm({userId, postId}: {userId: string, postId: string}) {
+export function CommentForm({userId, postId, commentId, type}: {userId: string, postId: string, commentId?: string, type: "Create" | "Update"}) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -34,16 +34,23 @@ export function CreateCommentForm({userId, postId}: {userId: string, postId: str
       // 2. Define a submit handler.
       async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-          const newComment = await createComentary({
-            comment: {...values },
-            postId,
-            userId,
-          })
-          if(newComment){
-            console.log("Comentary created successfully")
-          }
-          form.reset()
           
+          if(type === "Create"){
+             await createComentary({
+              comment: {...values },
+              postId,
+              userId,
+            })
+            form.reset()
+          }
+
+          if(type === "Update"){
+            if(commentId === undefined){
+              commentId = ""
+            }
+            await updateComment({comment: {_id: commentId, message: values.message}, userId})
+          }
+
         } catch (error) {
           console.log(error)
         }
@@ -51,14 +58,14 @@ export function CreateCommentForm({userId, postId}: {userId: string, postId: str
 
     return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-3 items-center w-full h-12">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-3 items-center w-full h-16 ">
             <FormField
               control={form.control}
               name="message"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Add a comment" {...field}  className="min-w-[670px] w-full h-7"/>
+                    <Input placeholder="Add a comment" {...field}  className="min-w-[670px] w-full h-8 sm:w-full"/>
                   </FormControl>
                   <FormDescription>
                     

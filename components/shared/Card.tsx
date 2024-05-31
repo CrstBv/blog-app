@@ -15,7 +15,7 @@ const Card = ({ post }: CardProps) => {
 
   return (
     <div
-      className="group relative flex min-h-[350px] w-full max-w-[285px] flex-col overflow-hidden rounded-xl 
+      className="group relative flex min-h-[390px] w-full max-w-[285px] flex-col overflow-hidden rounded-xl 
     shadow-lg transition-all hover:shadow-xl md:min-h-[414x]"
     >
       <Link
