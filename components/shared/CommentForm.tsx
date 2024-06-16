@@ -36,8 +36,9 @@ export function CommentForm({userId, postId, commentId, type}: {userId: string, 
         try {
           
           if(type === "Create"){
+            const message = values.message
              await createComentary({
-              comment: {...values },
+              comment: {message},
               postId,
               userId,
             })

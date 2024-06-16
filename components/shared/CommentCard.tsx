@@ -10,10 +10,10 @@ type CommentProps = {
 export function CommentCard({comment}: CommentProps) {
     const { sessionClaims } = auth();
     const userId = sessionClaims?.userId as string;
-    const isAuthor = userId === comment.author._id.toString();
+    const isAuthor = userId === comment.author._id
 
     return (
-        <div>
+        <div className="group relative flex flex-col">
             <div>
 
             <div className={"flex items-center w-full"}>

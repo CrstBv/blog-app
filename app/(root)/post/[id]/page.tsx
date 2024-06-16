@@ -91,11 +91,11 @@ const PostDetails = async ({
           </div>
         </div>
       </section>
-      <section className="mx-12 flex items-center">
-          <div>
+      <section className="mx-12 flex flex-col items-center">
+          <div className="w-full">
             <CommentForm userId={userId} postId={post._id} type="Create" />
             </div>
-            <div>
+            <div className="flex flex-col w-full">
               <CommentsSection data={comments} />
             </div>
       </section>

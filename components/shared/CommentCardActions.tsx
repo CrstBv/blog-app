@@ -21,11 +21,12 @@ export function CommentCardActions() {
 }
 
 
-export async function CommentCardAuthorActions({commentId, userId}: {commentId: string, userId: string}) {
+export function CommentCardAuthorActions({commentId, userId}: {commentId: string, userId: string}) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  const comment = await getCommentById({commentId})
+  //const comment = await getCommentById({commentId})
     return (
       <>
+      { /*
       <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
         <AlertDialogTrigger></AlertDialogTrigger>
         <AlertDialogContent className='bg-inherit'>
@@ -45,7 +46,7 @@ export async function CommentCardAuthorActions({commentId, userId}: {commentId: 
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
-
+  */}
                 {/* InitialValues for CommentForm and implement the Delete Action */}
             <div className="flex items-center justify-between mx-5">
             <div className="absolute right-2 top-2 rounded-sm bg-transparent shadow-inner transition-all">
