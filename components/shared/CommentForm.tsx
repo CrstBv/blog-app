@@ -14,7 +14,8 @@ import {
   FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { createComentary, updateComment } from "@/lib/actions/comment.action"
+import { createComentary, updateComment } from "@/lib/actions/comment.actions"
+import { IComment } from "@/lib/database/models/comment.model"
 import { PaperPlaneIcon } from "@radix-ui/react-icons"
  
 const formSchema = z.object({
@@ -23,12 +24,13 @@ const formSchema = z.object({
   }),
 })
 
-export function CommentForm({userId, postId, commentId, type}: {userId: string, postId: string, commentId?: string, type: "Create" | "Update"}) {
-    const form = useForm<z.infer<typeof formSchema>>({
+export function CommentForm({userId, postId, commentId, type, comment}: 
+  {userId: string, postId: string, commentId?: string, type: "Create" | "Update", comment?: IComment}) {
+  const initialValues = comment && type === "Update" ? comment : { message: ""}
+  
+  const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-          message: "",
-        },
+        defaultValues: initialValues
       })
      
       // 2. Define a submit handler.
@@ -75,7 +77,10 @@ export function CommentForm({userId, postId, commentId, type}: {userId: string, 
                 </FormItem>
               )}
             />
-            <Button type="submit" className="flex items-center gap-1 h-7"> <PaperPlaneIcon className="w-4 h-4" /> Submit</Button>
+            <Button type="submit" className="flex items-center gap-1 h-7" disabled={form.formState.isSubmitting}>
+               <PaperPlaneIcon className="w-4 h-4" />
+                {form.formState.isSubmitting ? "Submitting..." : `${type} Comment`}
+               </Button>
           </form>
         </Form>
       )

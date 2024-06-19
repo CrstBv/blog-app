@@ -1,7 +1,7 @@
 import Collection from "@/components/shared/Collection";
 import { CommentForm } from "@/components/shared/CommentForm";
 import { CommentsSection } from "@/components/shared/CommentsSection";
-import { getAllPostComments } from "@/lib/actions/comment.action";
+import { getAllPostComments } from "@/lib/actions/comment.actions";
 import {
   getPostById,
   getRelatedPostsByCategory,

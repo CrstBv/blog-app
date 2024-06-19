@@ -11,19 +11,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { postFormSchema } from "@/lib/validator";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import Dropdown from "./Dropdown";
 import { Textarea } from "@/components/ui/textarea";
-import { FileUploader } from "./FileUploader";
-import { useState } from "react";
-import { Checkbox } from "../ui/checkbox";
-import { useUploadThing } from "@/lib/uploadthing";
-import { useRouter } from "next/navigation";
 import { createPost, updatePost } from "@/lib/actions/post.actions";
 import { IPost } from "@/lib/database/models/post.model";
+import { useUploadThing } from "@/lib/uploadthing";
+import { postFormSchema } from "@/lib/validator";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Checkbox } from "../ui/checkbox";
+import Dropdown from "./Dropdown";
+import { FileUploader } from "./FileUploader";
 
 type PostFormProps = {
   userId: string;

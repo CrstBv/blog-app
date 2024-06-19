@@ -39,8 +39,10 @@ export async function createComentary({userId, comment, postId}: CreateCommentPa
 export async function populateComment(query: any) {
     return query
       .populate({ path: "author", model: User, select: "_id firstName lastName photo" })
-      .populate({ path: "category", model: Post, select: "_id title" });
+      .populate({ path: "post", model: Post, select: "_id title" });
 }
+
+  
 
 export async function getCommentById({commentId}: {commentId: string}) {
     try {
@@ -122,6 +124,22 @@ export async function updateComment({comment, userId}: {comment: {_id: string, m
     return JSON.parse(JSON.stringify(updatedComment))
     } catch (error) {
         console.error(error)
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    }
+}
+
+export async function createCommentReply({commentId}: {commentId: string}) {
+    try {
+        await connectToDatabase()
+
+        const commentToReply = await Comment.findById({commentId})
+
+        if(!commentToReply) {
+            throw new Error("Comment not found, you cant reply now try later")
+        }
+        {/*Create schema for replies with objectId of comment to reply */}
+    } catch (error) {
+        console.log(error)
         throw new Error(typeof error === "string" ? error : JSON.stringify(error))
     }
 }
