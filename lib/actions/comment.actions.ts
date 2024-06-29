@@ -127,19 +127,3 @@ export async function updateComment({comment, userId}: {comment: {_id: string, m
         throw new Error(typeof error === "string" ? error : JSON.stringify(error))
     }
 }
-
-export async function createCommentReply({commentId}: {commentId: string}) {
-    try {
-        await connectToDatabase()
-
-        const commentToReply = await Comment.findById({commentId})
-
-        if(!commentToReply) {
-            throw new Error("Comment not found, you cant reply now try later")
-        }
-        {/*Create schema for replies with objectId of comment to reply */}
-    } catch (error) {
-        console.log(error)
-        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
-    }
-}
