@@ -36,19 +36,16 @@ export async function createComentary({userId, comment, postId}: CreateCommentPa
     }
 }
 
-export async function populateComment(query: any) {
-    return query
-      .populate({ path: "author", model: User, select: "_id firstName lastName photo" })
-      .populate({ path: "post", model: Post, select: "_id title" });
-}
 
   
 
-export async function getCommentById({commentId}: {commentId: string}) {
+export async function getCommentById(commentId: string) {
     try {
         await connectToDatabase()
 
-        const comment = await populateComment(Comment.findById({commentId}))
+        const comment = await Comment.findById(commentId)
+        .populate({path: "author", model: User, select: "_id firstName lastName photo"})
+        .populate({path: "post", model: Post, select: "_id title"})
 
         if(!comment) {
             throw new Error("Comment not found")
@@ -62,16 +59,18 @@ export async function getCommentById({commentId}: {commentId: string}) {
 }
 
 
-export async function getAllPostComments({postId}: {postId: string}) {
+export async function getAllPostComments({postId}:{postId: string}) {
     try {
         await connectToDatabase()
 
         const conditions = {post: postId}
 
         const commentsQuery = await Comment.find(conditions)
+        .populate({path: "author", model: User, select: "_id firstName lastName photo"})
+        .populate({path: "post", model: Post, select: "_id title"})
+        .sort({createdAt: "desc"})
 
-        //const comments = await populateComment(commentsQuery)
-
+        // const comments = await populateComment(commentsQuery)
         if(!commentsQuery){
             return []
         }

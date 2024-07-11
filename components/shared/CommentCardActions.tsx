@@ -23,7 +23,7 @@ export function CommentCardActions() {
 
 export function CommentCardAuthorActions({commentId, userId}: {commentId: string, userId: string}) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  //const comment = await getCommentById({commentId})
+  // const comment = await getCommentById(commentId)
   
     return (
       <>
