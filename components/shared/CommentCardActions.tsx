@@ -24,7 +24,7 @@ export function CommentCardActions() {
 export function CommentCardAuthorActions({commentId, userId}: {commentId: string, userId: string}) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   // const comment = await getCommentById(commentId)
-  
+  // comments must apper without refreshing
     return (
       <>
       <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>

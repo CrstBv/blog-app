@@ -40,3 +40,40 @@ export async function CreateReply({userId, reply, repliedCommentId}: CreateReply
         throw new Error(typeof error === "string" ? error : JSON.stringify(error))
     }
 }
+
+export async function getReplyById({replyId}: {replyId: string}) {
+    try {
+        await connectToDatabase()
+
+        const reply = await Reply.findById({replyId})
+        .populate({path: "author", model: User, select: "_id firstName lastName photo"})
+
+        if(!reply) {
+            throw new Error("Reply not found")
+        }
+
+        return JSON.parse(JSON.stringify(reply))
+    } catch (error) {
+        console.error(error)
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    }
+}
+
+export async function getAllCommentReplies({commentId}: {commentId: string}){
+    try {
+        await connectToDatabase()
+
+        const replies = await Reply.find({commentId})
+        .populate({path: "author", model: User, select: "_id firstName lastName photo"})
+        .sort({createdAt: "desc"})
+
+        if(!replies){
+            throw new Error("There´s no replies for this comment")
+        }
+        
+        return JSON.parse(JSON.stringify(replies))
+    } catch (error) {
+        console.error(error)
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    }
+}
