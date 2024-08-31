@@ -77,3 +77,43 @@ export async function getAllCommentReplies({commentId}: {commentId: string}){
         throw new Error(typeof error === "string" ? error : JSON.stringify(error))
     }
 }
+
+export async function updateReply({reply, userId}: {reply: {_id: string, message: string}, userId: string}) {
+    try {
+        await connectToDatabase()
+
+        const replyToUpdate = await Reply.findById(reply._id)
+
+        if(!replyToUpdate){
+            throw new Error ("Reply not found")
+        }
+
+        if(replyToUpdate.author.toHexString() !== userId) {
+            throw new Error("Unauthorized")
+        }
+
+        const updatedReply = await Reply.findByIdAndUpdate(reply._id, {...reply})
+
+        return JSON.parse(JSON.stringify(updatedReply))
+    } catch (error) {
+        console.error(error)
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    }
+}
+
+export async function deleteReply({replyId}: {replyId: string}) {
+    try {
+        await connectToDatabase()
+
+        const replyToDelete = await Reply.findByIdAndDelete({replyId})
+
+        if(!replyToDelete){
+            throw new Error("Reply not found")
+        }
+
+        console.log("reply deleted successfully")
+    } catch (error) {
+        console.error(error)
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    }
+}
