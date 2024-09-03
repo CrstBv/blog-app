@@ -1,5 +1,5 @@
 "use client"
-import { getCommentById } from "@/lib/actions/comment.actions";
+import { deleteComment, getCommentById } from "@/lib/actions/comment.actions";
 import { DotsVerticalIcon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
@@ -21,10 +21,11 @@ export function CommentCardActions() {
 }
 
 
-export function CommentCardAuthorActions({commentId, userId}: {commentId: string, userId: string}) {
+export function CommentCardAuthorActions(
+  {comment, userId}: 
+  {comment: {_id: string, post:{_id: string}}, userId: string}) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  // const comment = await getCommentById(commentId)
-  // comments must apper without refreshing
+  //const comment = await getCommentById(commentId) this will go in the fetch data
     return (
       <>
       <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
@@ -34,7 +35,7 @@ export function CommentCardAuthorActions({commentId, userId}: {commentId: string
                 <AlertDialogTitle>
                     Edit your comment
                 </AlertDialogTitle>
-               {/* <CommentForm type="Update" commentId={comment._id} postId={comment.post._id} userId={userId} comment={comment}/> */}
+                <CommentForm type="Update" commentId={comment._id} postId={comment.post._id} userId={userId}/>
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -56,7 +57,12 @@ export function CommentCardAuthorActions({commentId, userId}: {commentId: string
                 <Pencil1Icon className="w-4 h-4" /> Edit
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="flex gap-1 items-center justify-center cursor-pointer text-red-400">
+              <DropdownMenuItem
+              className="flex gap-1 items-center justify-center cursor-pointer text-red-400"
+              onClick={async () => {
+                await deleteComment({commentId: comment._id})//Alert can be 
+              }}
+              >
                 <TrashIcon className="w-4 h-4"/>
             Delete
               </DropdownMenuItem>

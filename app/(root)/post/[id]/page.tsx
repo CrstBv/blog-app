@@ -1,3 +1,4 @@
+"use client"
 import Collection from "@/components/shared/Collection";
 import { CommentForm } from "@/components/shared/CommentForm";
 import { CommentsSection } from "@/components/shared/CommentsSection";
@@ -11,6 +12,7 @@ import { formatDate } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 type searchParamProps = {
   params: { id: string };
@@ -21,18 +23,33 @@ const PostDetails = async ({
   params: { id },
   searchParams,
 }: searchParamProps) => {
+  const [comments,setComments] = useState([])
   const page = Number(searchParams?.page) || 1;
   const post = await getPostById(id);
+  const postId = post._id
   const relatedPost = await getRelatedPostsByCategory({
     categoryId: post.category._id,
-    postId: post._id,
+    postId,
     page: searchParams.page as string,
   });
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   const isAuthor = userId === post.author._id.toString();
-  const comments = await getAllPostComments({postId: post._id})
   const isLoading = comments === undefined
+
+  useEffect(() => {
+    const fetchComments = async() => {
+      try {
+        const commentsData = await getAllPostComments({postId})
+        setComments(commentsData)
+      } catch (error) {
+        console.error("" + error)
+      }
+    }
+    fetchComments()
+
+
+  }, [postId])
 
   return (
     <div className="container relative">
@@ -103,11 +120,11 @@ const PostDetails = async ({
                 <div className="text-2xl">Loading comments ...</div>
               </div>
             )}
-            {comments.lenght === 0 
-            ? <Placeholder image="/empty_comments.svg" message="Be the first comment" /> 
-            : <div className="flex flex-col w-full">
+            {comments.length > 0 
+            ? <div className="flex flex-col w-full">
                 <CommentsSection data={comments} />
               </div>
+            :  <Placeholder image="/empty_comments.svg" message="Be the first comment" /> 
             }
       </section>
       <section className="my-8 flex flex-col gap-8 md:gap-12">
