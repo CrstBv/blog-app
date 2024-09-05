@@ -28,7 +28,7 @@ export function CommentCard({comment}: CommentProps) {
                 </div>
             </div>
             {isAuthor && (
-                <CommentCardAuthorActions commentId={comment._id} userId={userId}/>
+                <CommentCardAuthorActions comment={comment} userId={userId}/>
             )}
             <p className="w-full text-sm">
             {comment.message}
