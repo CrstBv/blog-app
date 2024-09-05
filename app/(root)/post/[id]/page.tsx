@@ -48,7 +48,9 @@ const PostDetails = async ({
     }
     fetchComments()
 
+    const intervalId = setInterval(fetchComments, 4000)
 
+    return () => clearInterval(intervalId)
   }, [postId])
 
   return (

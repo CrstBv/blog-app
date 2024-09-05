@@ -25,7 +25,6 @@ export function CommentCardAuthorActions(
   {comment, userId}: 
   {comment: {_id: string, post:{_id: string}}, userId: string}) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  //const comment = await getCommentById(commentId) this will go in the fetch data
     return (
       <>
       <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
@@ -33,35 +32,34 @@ export function CommentCardAuthorActions(
         <AlertDialogContent className='bg-inherit'>
             <AlertDialogHeader>
                 <AlertDialogTitle>
-                    Edit your comment
+                    Are you sure you want to delete?
                 </AlertDialogTitle>
-                <CommentForm type="Update" commentId={comment._id} postId={comment.post._id} userId={userId}/>
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction className='bg-red-600' onClick={async() => {
-                  setIsConfirmOpen(false)
+                  await deleteComment({commentId: comment._id})
+                  //setIsConfirmOpen(false)
                 }}>
-                  Done
+                  Confirm
                 </AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
-                    {/* InitialValues for CommentForm and implement the Delete Action */}
+                    {/* InitialValues for CommentForm and implement the Delete Action 
+                    <CommentForm type="Update" commentId={comment._id} postId={comment.post._id} userId={userId}/>*/}
             <div className="flex items-center justify-between mx-5">
             <div className="absolute right-2 top-2 rounded-sm bg-transparent shadow-inner transition-all">
           <DropdownMenu>
-            <DropdownMenuTrigger><DotsVerticalIcon className="w-7 h-7" /></DropdownMenuTrigger>
+            <DropdownMenuTrigger><DotsVerticalIcon className="w-4 h-4" /></DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem className="flex gap-1 items-center cursor-pointer" onClick={() => {setIsConfirmOpen(true)}}>
+              <DropdownMenuItem className="flex gap-1 items-center cursor-pointer">
                 <Pencil1Icon className="w-4 h-4" /> Edit
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
               className="flex gap-1 items-center justify-center cursor-pointer text-red-400"
-              onClick={async () => {
-                await deleteComment({commentId: comment._id})//Alert can be 
-              }}
+              onClick={() => setIsConfirmOpen(true)}
               >
                 <TrashIcon className="w-4 h-4"/>
             Delete
