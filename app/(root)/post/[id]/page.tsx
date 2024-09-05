@@ -1,18 +1,13 @@
-"use client"
 import Collection from "@/components/shared/Collection";
 import { CommentForm } from "@/components/shared/CommentForm";
 import { CommentsSection } from "@/components/shared/CommentsSection";
-import { Placeholder } from "@/components/ui/placeholder";
-import { getAllPostComments } from "@/lib/actions/comment.actions";
 import {
   getPostById,
   getRelatedPostsByCategory,
 } from "@/lib/actions/post.actions";
 import { formatDate } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
-import { ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 type searchParamProps = {
   params: { id: string };
@@ -23,7 +18,6 @@ const PostDetails = async ({
   params: { id },
   searchParams,
 }: searchParamProps) => {
-  const [comments,setComments] = useState([])
   const page = Number(searchParams?.page) || 1;
   const post = await getPostById(id);
   const postId = post._id
@@ -35,23 +29,7 @@ const PostDetails = async ({
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   const isAuthor = userId === post.author._id.toString();
-  const isLoading = comments === undefined
 
-  useEffect(() => {
-    const fetchComments = async() => {
-      try {
-        const commentsData = await getAllPostComments({postId})
-        setComments(commentsData)
-      } catch (error) {
-        console.error("" + error)
-      }
-    }
-    fetchComments()
-
-    const intervalId = setInterval(fetchComments, 4000)
-
-    return () => clearInterval(intervalId)
-  }, [postId])
 
   return (
     <div className="container relative">
@@ -116,18 +94,7 @@ const PostDetails = async ({
           <div className="w-full">
             <CommentForm userId={userId} postId={post._id} type="Create" />
             </div>
-            {isLoading && (
-              <div className="fles flex-col gap-10 w-full items-center mt-28">
-                <ReloadIcon className="h-36 w-36 animate-spin text-gray-500" />
-                <div className="text-2xl">Loading comments ...</div>
-              </div>
-            )}
-            {comments.length > 0 
-            ? <div className="flex flex-col w-full">
-                <CommentsSection data={comments} />
-              </div>
-            :  <Placeholder image="/empty_comments.svg" message="Be the first comment" /> 
-            }
+            {<CommentsSection postId={postId} />}
       </section>
       <section className="my-8 flex flex-col gap-8 md:gap-12">
         <h2>Related Post</h2>
