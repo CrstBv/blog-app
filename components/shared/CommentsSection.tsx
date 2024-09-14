@@ -42,7 +42,7 @@ export function CommentsSection({postId}: { postId: string}) {
                 )
               })}
             </div>
-          :  <Placeholder image="/empty_comments.svg" message="Be the first comment" /> 
+          :  <Placeholder image="/assets/images/empty_comments.svg" message="Be the first comment" /> 
           }
         </div>
     )

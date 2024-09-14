@@ -94,7 +94,7 @@ const PostDetails = async ({
           <div className="w-full">
             <CommentForm userId={userId} postId={post._id} type="Create" />
             </div>
-            {<CommentsSection postId={postId} />}
+            <CommentsSection postId={postId} />
       </section>
       <section className="my-8 flex flex-col gap-8 md:gap-12">
         <h2>Related Post</h2>
