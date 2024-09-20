@@ -5,8 +5,9 @@ import {
   getPostById,
   getRelatedPostsByCategory,
 } from "@/lib/actions/post.actions";
+import { currentUserId } from "@/lib/actions/user.actions";
 import { formatDate } from "@/lib/utils";
-import { auth } from "@clerk/nextjs";
+//import { useAuth } from "@clerk/clerk-react";
 import Image from "next/image";
 
 type searchParamProps = {
@@ -26,9 +27,9 @@ const PostDetails = async ({
     postId,
     page: searchParams.page as string,
   });
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-  const isAuthor = userId === post.author._id.toString();
+  const postAuthorId = post.author._id.toString();
+  const userId = await currentUserId().toString()
+  const isAuthor = userId === postAuthorId
 
 
   return (

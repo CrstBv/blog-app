@@ -1,9 +1,11 @@
 "use server";
 
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database";
-import User from "../database/models/user.model";
 import Post from "../database/models/post.model";
+import User from "../database/models/user.model";
+
 
 type CreateUserParams = {
     clerkId: string;
@@ -88,5 +90,21 @@ export async function deleteUser(clerkId: string) {
   } catch (error) {
     console.error(error);
     throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+  }
+}
+
+export async function currentUserId(){
+  try {
+    const user = await currentUser()
+
+    if(!user) {
+      return "Not signed in"
+    }
+
+    const userId = user.id.toString()
+
+    return userId
+  } catch (error) {
+    console.log("Couldn´t get userId")
   }
 }

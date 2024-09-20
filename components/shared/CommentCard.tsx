@@ -1,15 +1,14 @@
-import { IComment } from "@/lib/database/models/comment.model"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { CommentCardActions, CommentCardAuthorActions } from "./CommentCardActions"
-import { auth } from "@clerk/nextjs";
+import { currentUserId } from "@/lib/actions/user.actions";
+import { IComment } from "@/lib/database/models/comment.model";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { CommentCardActions, CommentCardAuthorActions } from "./CommentCardActions";
 
 type CommentProps = {
     comment: IComment
 }
 
-export function CommentCard({comment}: CommentProps) {
-    const { sessionClaims } = auth();
-    const userId = sessionClaims?.userId as string;
+export async function CommentCard({comment}: CommentProps) {
+    const userId = await currentUserId().toString()
     const isAuthor = userId === comment.author._id
 
     return (
