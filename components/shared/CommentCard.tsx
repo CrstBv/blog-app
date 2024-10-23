@@ -1,4 +1,3 @@
-import { currentUserId } from "@/lib/actions/user.actions";
 import { IComment } from "@/lib/database/models/comment.model";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { CommentCardActions, CommentCardAuthorActions } from "./CommentCardActions";
@@ -8,8 +7,7 @@ type CommentProps = {
 }
 
 export async function CommentCard({comment}: CommentProps) {
-    const userId = await currentUserId().toString()
-    const isAuthor = userId === comment.author._id
+    //const isAuthor = userId === comment.author._id
 
     return (
         <div className="group relative flex flex-col">
@@ -26,9 +24,9 @@ export async function CommentCard({comment}: CommentProps) {
                     </div>
                 </div>
             </div>
-            {isAuthor && (
+            { /*isAuthor && (
                 <CommentCardAuthorActions comment={comment} userId={userId}/>
-            )}
+            )*/}
             <p className="w-full text-sm">
             {comment.message}
             </p>

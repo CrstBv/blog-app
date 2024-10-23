@@ -70,7 +70,6 @@ export async function getAllPostComments({postId}:{postId: string}) {
         .populate({path: "post", model: Post, select: "_id title"})
         .sort({createdAt: "desc"})
 
-        // const comments = await populateComment(commentsQuery)
         if(!commentsQuery){
             return []
         }

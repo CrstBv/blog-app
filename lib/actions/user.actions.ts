@@ -93,7 +93,7 @@ export async function deleteUser(clerkId: string) {
   }
 }
 
-export async function currentUserId(){
+export async function getCurrentUserId(){
   try {
     const user = await currentUser()
 

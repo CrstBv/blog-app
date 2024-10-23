@@ -5,7 +5,7 @@ import {
   getPostById,
   getRelatedPostsByCategory,
 } from "@/lib/actions/post.actions";
-import { currentUserId } from "@/lib/actions/user.actions";
+import { getCurrentUserId } from "@/lib/actions/user.actions";
 import { formatDate } from "@/lib/utils";
 //import { useAuth } from "@clerk/clerk-react";
 import Image from "next/image";
@@ -20,6 +20,7 @@ const PostDetails = async ({
   searchParams,
 }: searchParamProps) => {
   const page = Number(searchParams?.page) || 1;
+  const currentUserId = await getCurrentUserId()
   const post = await getPostById(id);
   const postId = post._id
   const relatedPost = await getRelatedPostsByCategory({
@@ -28,7 +29,7 @@ const PostDetails = async ({
     page: searchParams.page as string,
   });
   const postAuthorId = post.author._id.toString();
-  const userId = await currentUserId().toString()
+  const userId  = currentUserId as string
   const isAuthor = userId === postAuthorId
 
 
@@ -64,7 +65,7 @@ const PostDetails = async ({
                     {formatDate(post.createdAt)} </span>
                     </div>
                      : <div>
-                     <span>Udated</span>
+                     <span>Udapted</span>
                    <span className="pl-2" >
                     {formatDate(post.updatedAt)}
                     </span>
@@ -95,7 +96,7 @@ const PostDetails = async ({
           <div className="w-full">
             <CommentForm userId={userId} postId={post._id} type="Create" />
             </div>
-            <CommentsSection postId={postId} />
+            <CommentsSection postId={postId}/>
       </section>
       <section className="my-8 flex flex-col gap-8 md:gap-12">
         <h2>Related Post</h2>
