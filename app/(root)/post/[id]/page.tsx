@@ -43,7 +43,7 @@ const PostDetails = ({
           <div className="w-full">
             {/*<CommentForm userId={userId} postId={post._id} type="Create" />*/}
             </div>
-            <CommentsSection postId={postId}/>
+            {/*<CommentsSection postId={postId}/>*/}
       </section>
       </div>
   );
